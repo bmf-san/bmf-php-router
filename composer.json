@@ -8,6 +8,14 @@
     "email": "bmf.infomation@gmail.com"
   }],
   "minimum-stability": "stable",
+  "scripts": {
+    "phpunit": [
+      "./vendor/bin/phpunit --colors=always"
+    ],
+    "ci": [
+      "@phpunit"
+    ]
+  }
   "autoload": {
     "psr-4": {
       "bmfsan\\AhiRouter\\": "src/AhiRouter/",
