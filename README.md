@@ -6,12 +6,13 @@
 [![Monthly Downloads](https://poser.pugx.org/bmf-san/ahi-router/d/monthly)](https://packagist.org/packages/bmf-san/ahi-router)
 [![Daily Downloads](https://poser.pugx.org/bmf-san/ahi-router/d/daily)](https://packagist.org/packages/bmf-san/ahi-router)
 [![composer.lock](https://poser.pugx.org/bmf-san/ahi-router/composerlock)](https://packagist.org/packages/bmf-san/ahi-router)
+[![CircleCI](https://circleci.com/gh/bmf-san/ahi-router/tree/master.svg?style=svg)](https://circleci.com/gh/bmf-san/ahi-router/tree/master)
 
-The simple URL router built with PHP
+The simple URL router built with PHP.
 
-ahiru + router = ahi-router
+Ahiru + Router = ahi-router
 
-ahiru means "duck" in japanese.
+Ahiru means "duck" in japanese.
 
 [Packagist - bmf-san/ahi-router](https://packagist.org/packages/bmf-san/ahi-router)
 
