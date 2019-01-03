@@ -7,12 +7,6 @@
     "name": "bmf-san",
     "email": "bmf.infomation@gmail.com"
   }],
-  "repositories": [
-       {
-           "type": "vcs",
-           "url": "https://github.com/bmf-san/ahi-router.git"
-       }
-   ]
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
@@ -21,6 +15,9 @@
     }
   },
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
   }
 }
