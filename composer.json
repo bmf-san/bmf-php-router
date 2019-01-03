@@ -15,7 +15,7 @@
     "ci": [
       "@phpunit"
     ]
-  }
+  },
   "autoload": {
     "psr-4": {
       "bmfsan\\AhiRouter\\": "src/AhiRouter/",
