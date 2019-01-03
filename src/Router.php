@@ -7,14 +7,7 @@ class Router {
      * Path parameters
      * @var array
      */
-    private $params;
-
-    /**
-     * Router constructor
-     */
-    public function __constuct() {
-        $this->params = [];
-    }
+    private $params = [];
 
     /**
      * Create array for search path from current path

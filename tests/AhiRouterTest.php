@@ -3,61 +3,74 @@
 namespace bmfsan\AhiRouterTest;
 
 use PHPUnit\Framework\TestCase;
-use bmfsan\AhiRouter;
+use bmfsan\AhiRouter\Router;
 
 class AhiRouterTest extends TestCase 
 {
   private $routes = [
       '/' => [
           'SLASH_NODE' => [
-              'GET' => 'PATH: / METHOD: GET',
+              'GET' => 'HomeController@index',
           ],
           'users' => [
               'SLASH_NODE' => [
-                  'GET' => 'PATH: /users METHOD: GET',
+                  'GET' => 'UserController@index',
               ],
               ':user_id' => [
                   'SLASH_NODE' => [
-                      'GET' => 'PATH: /users/:user_id METHOD: GET',
-                      'POST' => 'PATH: /users/:user_id METHOD: POST',
+                      'GET' => 'UserController@getUser',
+                      'POST' => 'UserController@postUser',
                   ],
                   'events' =>  [
                       'SLASH_NODE' => [
-                          'GET' => 'PATH: /users/:user_id/events METHOD: GET',
+                          'GET' => 'UserController@getEventsByUser',
                       ],
                       ':event_id' => [
                           'SLASH_NODE' => [
-                              'GET' => 'PATH: /users/:user_id/events/:event_id METHOD: GET',
-                              'POST' => 'PATH: /users/:user_id/events/:event_id METHOD: POST',
+                              'GET' => 'UserController@getEventByUser',
+                              'POST' => 'UserController@postEventByUser',
                           ],
                       ],
                   ],
               ],
-              ':event_id' => [
+              'config' => [
                   'SLASH_NODE' => [
-                      'GET' => 'PATH: /users/:event_id METHOD: GET',
-                      'POST' => 'PATH: /users/:event_id METHOD: POST',
-                  ],
-              ],
-              'support' => [
-                  'SLASH_NODE' => [
-                      'GET' => 'PATH: /users/support METHOD: GET',
+                      'GET' => 'UserController@getConfigByUser',
                   ],
               ],
           ],
       ],
   ];
 
-  public function testExample()
+  /**
+   * @dataProvider routerResponseProvider
+   */
+  public function testRouterResponse($currentPath, $currentMethod, $currentParams, $action, $params)
   {
-    $stack = [];
-        $this->assertSame(0, count($stack));
-
-        array_push($stack, 'foo');
-        $this->assertSame('foo', $stack[count($stack)-1]);
-        $this->assertSame(1, count($stack));
-
-        $this->assertSame('foo', array_pop($stack));
-        $this->assertSame(0, count($stack));
+    $routes = $this->routes;
+    $router = new Router();
+    $currentPathArray = $router->createPathArray($currentPath);
+    $result = $router->search($routes, $currentPathArray, $currentMethod, $currentParams);
+    
+    $this->assertSame($action, $result['action']);
+    $this->assertEquals($params, $result['params']);
+  }
+  
+  public function routerResponseProvider() {
+    return [
+      ['/', 'GET', [], 'HomeController@index', []],
+      ['/users', 'GET', [], 'UserController@index', []],
+      ['/users/1', 'GET', [':user_id'], 'UserController@getUser', [':user_id' => 1]],
+      ['/users/foo', 'GET', [':user_id'], 'UserController@getUser', [':user_id' => 'foo']],
+      ['/users/1', 'POST', [':user_id'], 'UserController@postUser', [':user_id' => 1]],
+      ['/users/foo', 'POST', [':user_id'], 'UserController@postUser', [':user_id' => 'foo']],
+      ['/users/1/events', 'GET', [':user_id'], 'UserController@getEventsByUser', [':user_id' => 1]],
+      ['/users/foo/events', 'GET', [':user_id'], 'UserController@getEventsByUser', [':user_id' => 'foo']],
+      ['/users/1/events/1', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 1, ':event_id' => 1]],
+      ['/users/foo/events/bar', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 'foo', ':event_id' => 'bar']],
+      ['/users/1/events/bar', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 1, ':event_id' => 'bar']],
+      ['/users/foo/events/1', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 'foo', ':event_id' => 1]],
+      ['/users/config', 'GET', [], 'UserController@getConfigByUser', []],
+    ];
   }
 }
