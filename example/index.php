@@ -1,16 +1,3 @@
-# bmf-php-router
-[![GitHub license](https://img.shields.io/github/license/bmf-san/bmf-php-router)](https://github.com/bmf-san/bmf-php-router/blob/master/LICENSE)
-[![CircleCI](https://circleci.com/gh/bmf-san/bmf-php-router.svg?style=svg)](https://circleci.com/gh/bmf-san/bmf-php-router)
-
-The simple URL router built with PHP.
-
-[Packagist - bmf-san/bmf-php-router](https://packagist.org/packages/bmf-san/bmf-php-router)
-
-# Installaion
-`composer require bmf-san/bmf-php-router`
-
-# Usage
-```php
 <?php
 
 require_once("../src/Router.php");
@@ -56,20 +43,3 @@ var_dump($result);
 //         string(5) "token"
 //     }
 // }
-```
-See a example/index.php.
-
-## Contributing
-
-We welcome your issue or pull request from everyone. Please check `ISSUE_TEMPLATE.md` and `PULL_REQUEST_TEMPLATE.md` to contribute.
-
-## License
-
-This project is licensed under the terms of the MIT license.
-
-## Author
-
-bmf - A Web Developer in Japan.
-
-- [@bmf-san](https://twitter.com/bmf_san)
-- [bmf-tech](http://bmf-tech.com/)
