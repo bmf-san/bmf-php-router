@@ -1,4 +1,6 @@
 <?php 
+use bmfsan\AhiRouter;
+
 $routes = [
     '/' => [
         'SLASH_NODE' => [
@@ -50,11 +52,7 @@ $currentParams = [
     ':event_id',
 ];
 
-$router = new Router();
+$router = new AhiRouter();
 
 $currentPathArray = $router->createPathArray($currentPath);
-var_dump($router->search($routes, $currentPathArray, $currentMethod, $currentParams);
-
-// TODO エラーハンドリング、テスト、リファクタリング
-
- ?>
+var_dump($router->search($routes, $currentPathArray, $currentMethod, $currentParams));

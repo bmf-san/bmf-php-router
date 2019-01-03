@@ -1,5 +1,7 @@
 <?php
 
+namespace bmfsan\AhiRouter;
+
 class Router {
     /**
      * Path parameters

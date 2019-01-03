@@ -1,0 +1,26 @@
+{
+  "name": "takeuchikenta/ahi-router",
+  "description": "The simple URL router built with PHP",
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "bmf-san",
+    "email": "bmf.infomation@gmail.com"
+  }],
+  "repositories": [
+       {
+           "type": "vcs",
+           "url": "https://github.com/bmf-san/ahi-router.git"
+       }
+   ]
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "bmfsan\\AhiRouter\\": "src/AhiRouter/",
+      "bmfsan\\AhiRouterTest\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+  }
+}
