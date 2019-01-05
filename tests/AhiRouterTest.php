@@ -43,34 +43,127 @@ class AhiRouterTest extends TestCase
   ];
 
   /**
-   * @dataProvider routerResponseProvider
+   * @test
+   * @dataProvider createPathArrayProvider
    */
-  public function testRouterResponse($currentPath, $currentMethod, $currentParams, $action, $params)
+  public function testCreatePathArray($currentPath, $expectedPathArray)
   {
     $routes = $this->routes;
     $router = new Router();
-    $currentPathArray = $router->createPathArray($currentPath);
-    $result = $router->search($routes, $currentPathArray, $currentMethod, $currentParams);
     
-    $this->assertSame($action, $result['action']);
-    $this->assertEquals($params, $result['params']);
+    $currentPathArray = $router->createPathArray($currentPath);
+    
+    $this->assertEquals($expectedPathArray, $currentPathArray);
   }
   
-  public function routerResponseProvider() {
+  /**
+   * @test
+   * @dataProvider searchProvider
+   */
+  public function testSearch($currentPath, $currentMethod, $currentParams, $expectedAction, $expectedParams)
+  {
+    $routes = $this->routes;
+    $router = new Router();
+    
+    $currentPathArray = $router->createPathArray($currentPath);
+    
+    $result = $router->search($routes, $currentPathArray, $currentMethod, $currentParams);
+    
+    $this->assertSame($expectedAction, $result['action']);
+    $this->assertEquals($expectedParams, $result['params']);
+  }
+  
+  /**
+   * DataProvider for testCreatePathArray
+   *
+   * @return array
+   */
+   public function createPathArrayProvider(): array
+   {
+     return [
+       '/' => [
+         '/', ['/']
+       ],
+       '/users' => [
+         '/users', ['users']
+       ],
+       '/user/1' => [
+         '/users/1', ['users', '1']
+       ],
+       '/users/foo' => [
+         '/users/foo', ['users', 'foo']
+       ],
+       '/users/1' => [
+         '/users/1', ['users', '1']
+       ],
+       '/users/1/events' => [
+         '/users/1/events', ['users', '1', 'events']
+       ],
+       '/users/foo/events' => [
+         '/users/foo/events', ['users', 'foo', 'events']
+       ],
+       '/users/1/events/1' => [
+         '/users/1/events/1', ['users', '1', 'events', '1']
+       ],
+       '/users/foo/events/bar' => [
+         '/users/foo/events/bar', ['users', 'foo', 'events', 'bar']
+       ],
+       '/users/1/events/bar' => [
+         '/users/1/events/bar', ['users', '1', 'events', 'bar']
+       ],
+       '/users/foo/events/1' => [
+         '/users/foo/events/1', ['users', 'foo', 'events', '1']
+       ],
+       '/users/config' => [
+         '/users/config', ['users', 'config']
+       ],
+     ];
+   }
+   
+  /**
+   * DataProvider for testSearch
+   * *
+   * @return array
+   */
+  public function searchProvider(): array
+  {
     return [
-      ['/', 'GET', [], 'HomeController@index', []],
-      ['/users', 'GET', [], 'UserController@index', []],
-      ['/users/1', 'GET', [':user_id'], 'UserController@getUser', [':user_id' => 1]],
-      ['/users/foo', 'GET', [':user_id'], 'UserController@getUser', [':user_id' => 'foo']],
-      ['/users/1', 'POST', [':user_id'], 'UserController@postUser', [':user_id' => 1]],
-      ['/users/foo', 'POST', [':user_id'], 'UserController@postUser', [':user_id' => 'foo']],
-      ['/users/1/events', 'GET', [':user_id'], 'UserController@getEventsByUser', [':user_id' => 1]],
-      ['/users/foo/events', 'GET', [':user_id'], 'UserController@getEventsByUser', [':user_id' => 'foo']],
-      ['/users/1/events/1', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 1, ':event_id' => 1]],
-      ['/users/foo/events/bar', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 'foo', ':event_id' => 'bar']],
-      ['/users/1/events/bar', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 1, ':event_id' => 'bar']],
-      ['/users/foo/events/1', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 'foo', ':event_id' => 1]],
-      ['/users/config', 'GET', [], 'UserController@getConfigByUser', []],
+      '/' => [
+        '/', 'GET', [], 'HomeController@index', []
+      ],
+      '/users' => [
+        '/users', 'GET', [], 'UserController@index', []
+      ],
+      '/user/1' => [
+        '/users/1', 'GET', [':user_id'], 'UserController@getUser', [':user_id' => 1]
+      ],
+      '/users/foo' => [
+        '/users/foo', 'GET', [':user_id'], 'UserController@getUser', [':user_id' => 'foo']
+      ],
+      '/users/1' => [
+        '/users/1', 'POST', [':user_id'], 'UserController@postUser', [':user_id' => 1]
+      ],
+      '/users/1/events' => [
+        '/users/1/events', 'GET', [':user_id'], 'UserController@getEventsByUser', [':user_id' => 1]
+      ],
+      '/users/foo/events' => [
+        '/users/foo/events', 'GET', [':user_id'], 'UserController@getEventsByUser', [':user_id' => 'foo']
+      ],
+      '/users/1/events/1' => [
+        '/users/1/events/1', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 1, ':event_id' => 1]
+      ],
+      '/users/foo/events/bar' => [
+        '/users/foo/events/bar', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 'foo', ':event_id' => 'bar']
+      ],
+      '/users/1/events/bar' => [
+        '/users/1/events/bar', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 1, ':event_id' => 'bar']
+      ],
+      '/users/foo/events/1' => [
+        '/users/foo/events/1', 'GET', [':user_id', ':event_id'], 'UserController@getEventByUser', [':user_id' => 'foo', ':event_id' => 1]
+      ],
+      '/users/config' => [
+        '/users/config', 'GET', [], 'UserController@getConfigByUser', []
+      ],
     ];
   }
 }
