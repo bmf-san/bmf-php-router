@@ -55,28 +55,28 @@ class Router
         $i = 0;
         while ($i < count($arrayFromCurrentPath)) {
             if ($i == 0) {
-                $targetRoutes = $routes['/'];
+                $targetArrayDimension = $routes['/'];
             }
 
             // Condition for root
             if ($arrayFromCurrentPath[$i] == '/') {
-                $result = $targetRoutes['SLASH_NODE'];
+                $result = $targetArrayDimension['END_POINT'];
                 break;
             }
 
-            foreach ($targetRoutes as $key => $value) {
+            foreach ($targetArrayDimension as $key => $value) {
                 if (isset($arrayFromCurrentPath[$i])) {
-                    if (isset($targetRoutes[$arrayFromCurrentPath[$i]])) {
-                        $targetRoutes = $targetRoutes[$arrayFromCurrentPath[$i]];
+                    if (isset($targetArrayDimension[$arrayFromCurrentPath[$i]])) {
+                        $targetArrayDimension = $targetArrayDimension[$arrayFromCurrentPath[$i]];
                     } else {
                         // Condition for parameters
-                        $targetRoutes = $this->matchParams($targetParams, $targetRoutes, $arrayFromCurrentPath[$i]);
+                        $targetArrayDimension = $this->createParams($targetParams, $targetArrayDimension, $arrayFromCurrentPath[$i]);
                     }
                 }
 
                 // Condition for last loop
                 if ($i == count($arrayFromCurrentPath) - 1) {
-                    $result = $targetRoutes['SLASH_NODE'];
+                    $result = $targetArrayDimension['END_POINT'];
                 }
 
                 $i++;
@@ -89,12 +89,21 @@ class Router
         ];
     }
 
-    public function matchParams($targetParams, $targetRoutes, $targetPath)
+    /**
+     * Create parameter data
+     *
+     * @param  array $targetParams
+     * @param  array $targetArrayDimension
+     * @param  string $targetPath
+     * @return array
+     */
+    public function createParams($targetParams, $targetArrayDimension, $targetPath)
     {
         for ($i=0; $i < count($targetParams); $i++) {
-            if (isset($targetRoutes[$targetParams[$i]])) {
+            if (isset($targetArrayDimension[$targetParams[$i]])) {
                 $this->params[$targetParams[$i]] = $targetPath;
-                return $targetRoutes[$targetParams[$i]];
+                
+                return $targetArrayDimension[$targetParams[$i]];
             }
         }
     }

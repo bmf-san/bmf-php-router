@@ -9,24 +9,24 @@ class AhiRouterTest extends TestCase
 {
   private $routes = [
       '/' => [
-          'SLASH_NODE' => [
+          'END_POINT' => [
               'GET' => 'HomeController@index',
           ],
           'users' => [
-              'SLASH_NODE' => [
+              'END_POINT' => [
                   'GET' => 'UserController@index',
               ],
               ':user_id' => [
-                  'SLASH_NODE' => [
+                  'END_POINT' => [
                       'GET' => 'UserController@getUser',
                       'POST' => 'UserController@postUser',
                   ],
                   'events' =>  [
-                      'SLASH_NODE' => [
+                      'END_POINT' => [
                           'GET' => 'UserController@getEventsByUser',
                       ],
                       ':event_id' => [
-                          'SLASH_NODE' => [
+                          'END_POINT' => [
                               'GET' => 'UserController@getEventByUser',
                               'POST' => 'UserController@postEventByUser',
                           ],
@@ -34,7 +34,7 @@ class AhiRouterTest extends TestCase
                   ],
               ],
               'config' => [
-                  'SLASH_NODE' => [
+                  'END_POINT' => [
                       'GET' => 'UserController@getConfigByUser',
                   ],
               ],
@@ -48,7 +48,6 @@ class AhiRouterTest extends TestCase
    */
   public function testCreateArrayFromCurrentPath($currentPath, $expectedPathArray)
   {
-    $routes = $this->routes;
     $router = new Router();
     
     $arrayFromCurrentPath = $router->createArrayFromCurrentPath($currentPath);
@@ -62,12 +61,11 @@ class AhiRouterTest extends TestCase
    */
   public function testSearch($currentPath, $requestMethod, $targetParams, $expectedAction, $expectedParams)
   {
-    $routes = $this->routes;
     $router = new Router();
     
     $arrayFromCurrentPath = $router->createArrayFromCurrentPath($currentPath);
     
-    $result = $router->search($routes, $arrayFromCurrentPath, $requestMethod, $targetParams);
+    $result = $router->search($this->routes, $arrayFromCurrentPath, $requestMethod, $targetParams);
     
     $this->assertSame($expectedAction, $result['action']);
     $this->assertEquals($expectedParams, $result['params']);
