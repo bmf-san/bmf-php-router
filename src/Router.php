@@ -97,7 +97,7 @@ class Router
      * @param  string $targetPath
      * @return array
      */
-    public function createParams($targetParams, $targetArrayDimension, $targetPath)
+    private function createParams($targetParams, $targetArrayDimension, $targetPath)
     {
         for ($i=0; $i < count($targetParams); $i++) {
             if (isset($targetArrayDimension[$targetParams[$i]])) {
