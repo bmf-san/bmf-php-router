@@ -20,7 +20,7 @@ Ahiru means "duck" in japanese.
 `composer require bmf-san/ahi-router`
 
 # Usage
-```
+```:php
 <?php
 require_once("vendor/autoload.php");
 
