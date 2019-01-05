@@ -46,35 +46,35 @@ class AhiRouterTest extends TestCase
    * @test
    * @dataProvider createPathArrayProvider
    */
-  public function testCreatePathArray($currentPath, $expectedPathArray)
+  public function testCreateArrayFromCurrentPath($currentPath, $expectedPathArray)
   {
     $routes = $this->routes;
     $router = new Router();
     
-    $currentPathArray = $router->createPathArray($currentPath);
+    $arrayFromCurrentPath = $router->createArrayFromCurrentPath($currentPath);
     
-    $this->assertEquals($expectedPathArray, $currentPathArray);
+    $this->assertEquals($expectedPathArray, $arrayFromCurrentPath);
   }
   
   /**
    * @test
    * @dataProvider searchProvider
    */
-  public function testSearch($currentPath, $currentMethod, $currentParams, $expectedAction, $expectedParams)
+  public function testSearch($currentPath, $requestMethod, $targetParams, $expectedAction, $expectedParams)
   {
     $routes = $this->routes;
     $router = new Router();
     
-    $currentPathArray = $router->createPathArray($currentPath);
+    $arrayFromCurrentPath = $router->createArrayFromCurrentPath($currentPath);
     
-    $result = $router->search($routes, $currentPathArray, $currentMethod, $currentParams);
+    $result = $router->search($routes, $arrayFromCurrentPath, $requestMethod, $targetParams);
     
     $this->assertSame($expectedAction, $result['action']);
     $this->assertEquals($expectedParams, $result['params']);
   }
   
   /**
-   * DataProvider for testCreatePathArray
+   * DataProvider for testCreateArrayFromCurrentPath
    *
    * @return array
    */

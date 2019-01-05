@@ -2,7 +2,8 @@
 
 namespace bmfsan\AhiRouter;
 
-class Router {
+class Router
+{
     /**
      * Path parameters
      * @var array
@@ -15,66 +16,66 @@ class Router {
      * @param  string $currentPath
      * @return array
      */
-    public function createPathArray($currentPath): array
+    public function createArrayFromCurrentPath($currentPath): array
     {
         $currentPathLength = strlen($currentPath);
 
-        $result = [];
+        $arrayFromCurrentPath = [];
 
         for ($i=0; $i < $currentPathLength; $i++) {
             if ($currentPathLength == 1) {
                 // ルートの時
                 if ($currentPath{$i} == '/') {
-                    $result[] = '/';
+                    $arrayFromCurrentPath[] = '/';
                 }
             } else {
                 if ($currentPath{$i} == '/') {
-                    $result[] = '';
-                    $target = count($result) - 1;
+                    $arrayFromCurrentPath[] = '';
+                    $target = count($arrayFromCurrentPath) - 1;
                 } else {
-                    $result[$target] .= $currentPath{$i};
+                    $arrayFromCurrentPath[$target] .= $currentPath{$i};
                 }
             }
         }
 
-        return $result;
+        return $arrayFromCurrentPath;
     }
 
     /**
      * Search a path and return action and parameters
      *
      * @param  array $routes
-     * @param  array $currentPathArray
-     * @param  string $currentMethod
-     * @param  array  $currentParams
+     * @param  array $arrayFromCurrentPath
+     * @param  string $requestMethod
+     * @param  array  $targetParams
      * @return array
      */
-    public function search($routes, $currentPathArray, $currentMethod, $currentParams = []): array
+    public function search($routes, $arrayFromCurrentPath, $requestMethod, $targetParams = []): array
     {
         $i = 0;
-        while ($i < count($currentPathArray)) {
+        while ($i < count($arrayFromCurrentPath)) {
             if ($i == 0) {
                 $targetRoutes = $routes['/'];
             }
 
             // Condition for root
-            if ($currentPathArray[$i] == '/') {
+            if ($arrayFromCurrentPath[$i] == '/') {
                 $result = $targetRoutes['SLASH_NODE'];
                 break;
             }
 
             foreach ($targetRoutes as $key => $value) {
-                if (isset($currentPathArray[$i])) {
-                    if (isset($targetRoutes[$currentPathArray[$i]])) {
-                        $targetRoutes = $targetRoutes[$currentPathArray[$i]];
+                if (isset($arrayFromCurrentPath[$i])) {
+                    if (isset($targetRoutes[$arrayFromCurrentPath[$i]])) {
+                        $targetRoutes = $targetRoutes[$arrayFromCurrentPath[$i]];
                     } else {
                         // Condition for parameters
-                        $targetRoutes = $this->matchParams($currentParams, $targetRoutes, $currentPathArray[$i]);
+                        $targetRoutes = $this->matchParams($targetParams, $targetRoutes, $arrayFromCurrentPath[$i]);
                     }
                 }
 
                 // Condition for last loop
-                if ($i == count($currentPathArray) - 1) {
+                if ($i == count($arrayFromCurrentPath) - 1) {
                     $result = $targetRoutes['SLASH_NODE'];
                 }
 
@@ -83,21 +84,18 @@ class Router {
         }
 
         return [
-            'action' => $result[$currentMethod],
+            'action' => $result[$requestMethod],
             'params' => $this->params,
         ];
     }
 
-    public function matchParams($currentParams, $targetRoutes, $currentPathArrayData) {
-        for ($i=0; $i < count($currentParams); $i++) {
-            if (isset($targetRoutes[$currentParams[$i]])) {
-                $this->params[$currentParams[$i]] = $currentPathArrayData;
-                return $targetRoutes[$currentParams[$i]];
+    public function matchParams($targetParams, $targetRoutes, $targetPath)
+    {
+        for ($i=0; $i < count($targetParams); $i++) {
+            if (isset($targetRoutes[$targetParams[$i]])) {
+                $this->params[$targetParams[$i]] = $targetPath;
+                return $targetRoutes[$targetParams[$i]];
             }
         }
     }
 }
-
-
-
-
