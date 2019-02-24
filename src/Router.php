@@ -102,7 +102,7 @@ class Router
         for ($i=0; $i < count($targetParams); $i++) {
             if (isset($targetArrayDimension[$targetParams[$i]])) {
                 $this->params[$targetParams[$i]] = $targetPath;
-                
+
                 return $targetArrayDimension[$targetParams[$i]];
             }
         }
