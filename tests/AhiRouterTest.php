@@ -51,20 +51,48 @@ class AhiRouterTest extends TestCase
     public function testRouter() {
         $router = new Router();
 
-        $router->add($router->createNodeList('/', 'GET', 'IndexController@index'));
-        $router->add($router->createNodeList('/posts', 'GET', 'PostController@index'));
-        $router->add($router->createNodeList('/posts/:id', 'GET', 'PostController@getPost'));
-        $router->add($router->createNodeList('/posts/:id/:title', 'GET', 'PostController@getPostByTitle'));
-        $router->add($router->createNodeList('/posts/:id/:title/:name', 'GET', 'PostController@getPostByName'));
-
-        $currentPathArray = $router->createArrayFromCurrentPath('/posts');
+        $router->add($router->createNodeList('/', [
+            'GET' => 'IndexController@index',
+            'POST' => 'IndexController@post',
+        ]));
+        $router->add($router->createNodeList('/posts', [
+            'GET' => 'PostController@index',
+            'POST' => 'PostController@post',
+        ]));
+        $router->add($router->createNodeList('/posts/:id', [
+            'GET' => 'PostController@getPost',
+            'POST' => 'PostController@post',
+        ]));
+        $router->add($router->createNodeList('/posts/:id/:title', [
+            'GET' => 'PostController@getPostByTitle',
+            'POST' => 'PostController@post',
+        ]));
+        $router->add($router->createNodeList('/posts/:id/:title/:name', [
+            'GET' => 'PostController@getPostByName',
+            'POST' => 'PostController@post',
+        ]));
+        $router->add($router->createNodeList('/category', [
+            'GET' => 'CategoryController@getCategory',
+        ]));
+        $router->add($router->createNodeList('/category/:id', [
+            'GET' => 'CategoryController@getCategory',
+        ]));
+        $router->add($router->createNodeList('/category/:id/:title', [
+            'GET' => 'CategoryController@getCategory',
+            'POST' => 'CategoryController@getCategory',
+        ]));
 
         ini_set('xdebug.var_display_max_children', -1);
         ini_set('xdebug.var_display_max_data', -1);
         ini_set('xdebug.var_display_max_depth', -1);
 
         // var_dump($router->tree);
-        var_dump($router->search($router->tree, $currentPathArray, 'GET', []));
+        var_dump($router->search(
+            $router->tree,
+            $router->createArrayFromCurrentPath('/category/1/1'),
+            'GET',
+            [':id', ':title']
+        ));
         exit();
     }
 

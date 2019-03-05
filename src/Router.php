@@ -59,11 +59,10 @@ class Router
     * /posts/:id -> [‘/’, ‘posts’, ‘:id’, ['END_POINT' => ['GET' => 'PostController@show']]
     *
     * @param string $nodeKey
-    * @param string $nodeMethod
-    * @param string $nodeAction
+    * @param array $nodeHandler
     * @return array
     */
-    public function createNodeList($nodeKey, $nodeMethod, $nodeAction)
+    public function createNodeList($nodeKey, $nodeHandler)
     {
         $nodeList = [];
         $target = 0;
@@ -90,9 +89,7 @@ class Router
             }
         }
 
-        $nodeList[count($nodeList)] = ['END_POINT' => [
-            $nodeMethod => $nodeAction
-        ]];
+        $nodeList[count($nodeList)] = ['END_POINT' => $nodeHandler];
 
         return $nodeList;
     }
