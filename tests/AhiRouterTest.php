@@ -47,6 +47,27 @@ class AhiRouterTest extends TestCase
         ],
     ];
 
+    // TODO: テストあとで正す
+    public function testRouter() {
+        $router = new Router();
+
+        $router->add($router->createNodeList('/', 'GET', 'IndexController@index'));
+        $router->add($router->createNodeList('/posts', 'GET', 'PostController@index'));
+        $router->add($router->createNodeList('/posts/:id', 'GET', 'PostController@getPost'));
+        $router->add($router->createNodeList('/posts/:id/:title', 'GET', 'PostController@getPostByTitle'));
+        $router->add($router->createNodeList('/posts/:id/:title/:name', 'GET', 'PostController@getPostByName'));
+
+        $currentPathArray = $router->createArrayFromCurrentPath('/posts');
+
+        ini_set('xdebug.var_display_max_children', -1);
+        ini_set('xdebug.var_display_max_data', -1);
+        ini_set('xdebug.var_display_max_depth', -1);
+
+        // var_dump($router->tree);
+        var_dump($router->search($router->tree, $currentPathArray, 'GET', []));
+        exit();
+    }
+
     /**
     * @test
     * @dataProvider createPathArrayProvider
