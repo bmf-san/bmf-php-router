@@ -6,3 +6,4 @@
 /tests           export-ignore
 /README.md       export-ignore
 /.editorconfig   export-ignore
+/example         export-ignore

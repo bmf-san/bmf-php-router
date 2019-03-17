@@ -22,75 +22,52 @@ Ahiru means "duck" in japanese.
 # Usage
 ```php
 <?php
-require_once("vendor/autoload.php");
 
-use bmfsan\AhiRouter\Router;
+require_once("../src/Router.php");
 
-$routes = [
-    '/' => [
-        'END_POINT' => [
-            'GET' => 'PATH: / METHOD: GET',
-        ],
-        'users' => [
-            'END_POINT' => [
-                'GET' => 'PATH: /users METHOD: GET',
-            ],
-            ':user_id' => [
-                'END_POINT' => [
-                    'GET' => 'PATH: /users/:user_id METHOD: GET',
-                    'POST' => 'PATH: /users/:user_id METHOD: POST',
-                ],
-                'events' =>  [
-                    'END_POINT' => [
-                        'GET' => 'PATH: /users/:user_id/events METHOD: GET',
-                    ],
-                    ':event_id' => [
-                        'END_POINT' => [
-                            'GET' => 'PATH: /users/:user_id/events/:event_id METHOD: GET',
-                            'POST' => 'PATH: /users/:user_id/events/:event_id METHOD: POST',
-                        ],
-                    ],
-                ],
-            ],
-            ':event_id' => [
-                'END_POINT' => [
-                    'GET' => 'PATH: /users/:event_id METHOD: GET',
-                    'POST' => 'PATH: /users/:event_id METHOD: POST',
-                ],
-            ],
-            'support' => [
-                'END_POINT' => [
-                    'GET' => 'PATH: /users/support METHOD: GET',
-                ],
-            ],
-        ],
-    ],
-];
+$router = new bmfsan\AhiRouter\Router();
 
-$currentPath = '/users/1/events/10';
-$currentMethod = 'GET';
-$currentParams = [
-    ':user_id',
-    ':event_id',
-];
+$router->add('/', [
+    'GET' => 'IndexController@index',
+]);
 
-$router = new Router();
+$router->add('/posts', [
+    'GET' => 'PostController@getPosts',
+]);
 
-$currentPathArray = $router->createArrayFromCurrentPath($currentPath);
-var_dump($router->search($routes, $currentPathArray, $currentMethod, $currentParams));
+$router->add('/posts/:id', [
+    'GET' => 'PostController@edit',
+    'POST' => 'PostController@update',
+]);
+
+$router->add('/posts/:id/:token', [
+    'GET' => 'PostController@preview',
+]);
+
+$router->add('/posts/:category', [
+    'GET' => 'PostController@getPostsByCategory',
+]);
+
+$router->add('/profile', [
+    'GET' => 'ProfileController@getProfile',
+]);
+
+$result = $router->search('/posts/1/token', 'GET', [':id', ':token']);
+
+var_dump($result);
 // array(2) {
-//   'action' =>
-//   string(50) "PATH: /users/:user_id/events/:event_id METHOD: GET"
-//   'params' =>
-//   array(2) {
-//     ':user_id' =>
-//     string(1) "1"
-//     ':event_id' =>
-//     string(2) "10"
-//   }
+//     'action' =>
+//     string(22) "PostController@preview"
+//     'params' =>
+//     array(2) {
+//         ':id' =>
+//         string(1) "1"
+//         ':token' =>
+//         string(5) "token"
+//     }
 // }
-``` 
-
+```
+See a example/index.php.
 
 ## Contributing
 
