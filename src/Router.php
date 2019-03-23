@@ -18,6 +18,13 @@ class Router
      */
     private $params = [];
 
+    /**
+     * Add routing to route map
+     *
+     * @param string $route
+     * @param array $handler
+     * @return void
+     */
     public function add($route, $handler)
     {
         $nodeList = [];
