@@ -100,15 +100,15 @@ class Router
 
         for ($i=0; $i < $currentPathLength; $i++) {
             if ($currentPathLength == 1) {
-                if ($requestUri{$i} == '/') {
+                if ($requestUri[$i] == '/') {
                     $arrayFromCurrentPath[] = '/';
                 }
             } else {
-                if ($requestUri{$i} == '/') {
+                if ($requestUri[$i] == '/') {
                     $arrayFromCurrentPath[] = '';
                     $target = count($arrayFromCurrentPath) - 1;
                 } else {
-                    $arrayFromCurrentPath[$target] .= $requestUri{$i};
+                    $arrayFromCurrentPath[$target] .= $requestUri[$i];
                 }
             }
         }
