@@ -1,4 +1,4 @@
-# ahi-router
+# bmf-php-router
 [![Latest Stable Version](https://poser.pugx.org/bmf-san/ahi-router/v/stable)](https://packagist.org/packages/bmf-san/ahi-router)
 [![Total Downloads](https://poser.pugx.org/bmf-san/ahi-router/downloads)](https://packagist.org/packages/bmf-san/ahi-router)
 [![Latest Unstable Version](https://poser.pugx.org/bmf-san/ahi-router/v/unstable)](https://packagist.org/packages/bmf-san/ahi-router)
