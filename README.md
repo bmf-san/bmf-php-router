@@ -10,14 +10,10 @@
 
 The simple URL router built with PHP.
 
-Ahiru + Router = ahi-router
-
-Ahiru means "duck" in japanese.
-
-[Packagist - bmf-san/ahi-router](https://packagist.org/packages/bmf-san/ahi-router)
+[Packagist - bmf-san/bmf-php-router](https://packagist.org/packages/bmf-san/bmf-php-router)
 
 # Installaion
-`composer require bmf-san/ahi-router`
+`composer require bmf-san/bmf-php-router`
 
 # Usage
 ```php
