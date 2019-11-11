@@ -1,12 +1,5 @@
 # bmf-php-router
-[![Latest Stable Version](https://poser.pugx.org/bmf-san/ahi-router/v/stable)](https://packagist.org/packages/bmf-san/ahi-router)
-[![Total Downloads](https://poser.pugx.org/bmf-san/ahi-router/downloads)](https://packagist.org/packages/bmf-san/ahi-router)
-[![Latest Unstable Version](https://poser.pugx.org/bmf-san/ahi-router/v/unstable)](https://packagist.org/packages/bmf-san/ahi-router)
-[![License](https://poser.pugx.org/bmf-san/ahi-router/license)](https://packagist.org/packages/bmf-san/ahi-router)
-[![Monthly Downloads](https://poser.pugx.org/bmf-san/ahi-router/d/monthly)](https://packagist.org/packages/bmf-san/ahi-router)
-[![Daily Downloads](https://poser.pugx.org/bmf-san/ahi-router/d/daily)](https://packagist.org/packages/bmf-san/ahi-router)
-[![composer.lock](https://poser.pugx.org/bmf-san/ahi-router/composerlock)](https://packagist.org/packages/bmf-san/ahi-router)
-[![CircleCI](https://circleci.com/gh/bmf-san/ahi-router/tree/master.svg?style=svg)](https://circleci.com/gh/bmf-san/ahi-router/tree/master)
+
 
 The simple URL router built with PHP.
 
@@ -21,7 +14,7 @@ The simple URL router built with PHP.
 
 require_once("../src/Router.php");
 
-$router = new bmfsan\AhiRouter\Router();
+$router = new bmfsan\BmfPhpRouter\Router();
 
 $router->add('/', [
     'GET' => 'IndexController@index',

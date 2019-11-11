@@ -2,7 +2,7 @@
 
 require_once("../src/Router.php");
 
-$router = new bmfsan\AhiRouter\Router();
+$router = new bmfsan\BmfPhpRouter\Router();
 
 $router->add('/', [
     'GET' => 'IndexController@index',

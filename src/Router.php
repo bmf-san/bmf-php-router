@@ -1,6 +1,6 @@
 <?php
 
-namespace bmfsan\AhiRouter;
+namespace bmfsan\BmfPhpRouter;
 
 class Router
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace bmfsan\AhiRouterTest\Feature;
+namespace bmfsan\BmfPhpRouterTest\Feature;
 
 use PHPUnit\Framework\TestCase;
-use bmfsan\AhiRouter\Router;
+use bmfsan\BmfPhpRouter\Router;
 
 class RouterTest extends TestCase
 {

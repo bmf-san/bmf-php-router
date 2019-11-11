@@ -1,5 +1,5 @@
 {
-  "name": "bmf-san/ahi-router",
+  "name": "bmf-san/bmf-php-router",
   "description": "The simple URL router built with PHP",
   "type": "library",
   "license": "MIT",
@@ -18,8 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "bmfsan\\AhiRouter\\": "src/",
-      "bmfsan\\AhiRouterTest\\": "tests/"
+      "bmfsan\\BmfPhpRouter\\": "src/",
+      "bmfsan\\BmfPhpRouterTest\\": "tests/"
     }
   },
   "require": {

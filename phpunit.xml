@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="AhiRouter Test Suite">
+        <testsuite name="BmfPhpRouter Test Suite">
             <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>
